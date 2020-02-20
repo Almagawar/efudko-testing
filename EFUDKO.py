@@ -63,36 +63,33 @@ class Efudko(object):
         close_btn = self.driver.find_element_by_link_text('×')
         close_btn.click()
         WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(
-            (By.XPATH,"//input[@tabIndex='-32768' and\
-            @placeholder='Для вывода списка введите не менее 2х символов']")))
-        proc_type = self.driver.find_element_by_xpath("//input[@tabIndex='-32768' and\
-            @placeholder='Для вывода списка введите не менее 2х символов']")
-        proc_type.send_keys('11')
-        # org_name = self.driver.find_element_by_xpath("//input[@*[starts-with(., 'jQuery')]]")
-        # return org_name
+            (By.XPATH,"//input[@*[starts-with(name(), 'jquery')]='141']")))
+        proc_type = self.driver.find_element_by_xpath("//input[@*[starts-with(name(), 'jquery')]='141']")
+        proc_type.send_keys('1100')
         proc_type.send_keys(Keys.DOWN)
         proc_type.send_keys(Keys.RETURN)
-        proc_type = self.driver.find_element_by_xpath("//input[@tabIndex='-32768' and\
-            @placeholder='Для вывода списка введите не менее 2х символов']")
-        
-        WebDriverWait(self.driver, 60).until(EC.presence_of_element_located(
-            (By.LINK_TEXT,"×")))
-        responsible = self.driver.find_element_by_xpath("//input[@tabIndex='-32768' and\
-             @style='WIDTH: 8px']")
-        responsible.send_keys('74 Департамент допуска и прекращения деятельности финансовых организаций')
-        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(
-            (By.LINK_TEXT,"×")))
-
-
+        resp_office = self.driver.find_element_by_xpath("//input[@*[starts-with(name(), 'jquery')]='185']")
+        resp_office.send_keys('74')
+        resp_office.send_keys(Keys.DOWN)
+        resp_office.send_keys(Keys.RETURN)
+        org_name = self.driver.find_element_by_xpath("//input[@*[starts-with(name(), 'jquery')]='119']")
+        org_name.send_keys('1115')
+        org_name.send_keys(Keys.DOWN)
+        org_name.send_keys(Keys.RETURN)    
+        explan_msg = self.driver.find_element_by_xpath("//input[@*[starts-with(name(), 'jquery')]='74']")
+        explan_msg.send_keys('Тестирование ' + self.driver.session_id) 
+        add_doc = self.driver.find_element_by_xpath("//button[@*[starts-with(name(), 'jquery')]='26']")
+        add_doc.click()
+        # C:\Users\erofe\Downloads\Mobilny_UNI_IIBS_Zadanie_2.pdf
+        self.driver.execute_script("""var inputBox = document.querySelector('input[name="documents[0]"][type="file"]');\
+            inputBox.setAttribute('value','C:\\Users\\erofe\\Downloads\\Mobilny_UNI_IIBS_Zadanie_2.pdf';""")
+        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(
+            (By.XPATH,"XXX")))
 
 if __name__ == '__main__':
     efudko = Efudko()
     efudko.login()
     efudko.close()
-
-
-
-
 
 
 
