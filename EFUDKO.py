@@ -8,17 +8,19 @@ import time
 
 class Efudko(object):
     
-    def login(self):
+    def boot(self):
         self.driver = webdriver.Ie()
         self.driver.maximize_window()
         self.driver.get("http://portal.efudko.dkz.cloud/wps/portal/!ut/p/c5/04_SB8K\
             8xLLM9MSSzPy8xBz9QJ_89PTUFP_SEv2CdEVFALCPJr8!/")
+
+    def login(self, lgin, pw):
         user_id = self.driver.find_element_by_name('wps.portlets.userid')
-        user_id.send_keys("efdmanagerca")
+        user_id.send_keys(lgin)
         password = self.driver.find_element_by_name('password')
         password.send_keys("2")
         password.clear()
-        password.send_keys("2wsx2WSX")
+        password.send_keys(pw)
         login_btn = self.driver.find_element_by_name('ns_7_CGAH47L00GNRC0I4B42HGB20E4__login')
         login_btn.click()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(
@@ -53,8 +55,9 @@ class Efudko(object):
         del_tab = self.driver.find_element_by_link_text('На рассмотрении')
         del_tab.click() 
 
-    def doc_kit_creation(self):
+    def doc_kit_creation(self, lgin, pw):
         # Создание комплекта документов КО
+        self.login(lgin, pw)
         self.driver.switch_to.default_content()
         doc_load_tab = self.driver.find_element_by_link_text('Загрузка внутренних ЭД')
         doc_load_tab.click()
@@ -94,9 +97,58 @@ class Efudko(object):
         submit_btn = self.driver.find_element_by_xpath("//button[@class='btn btn-info btn-lg']")
         submit_btn.click()
 
+    def del_and_restore(self):
+        user_id = self.driver.find_element_by_name('wps.portlets.userid')
+        user_id.send_keys("efdOperatorDelED")
+        password = self.driver.find_element_by_name('password')
+        password.send_keys("2")
+        password.clear()
+        password.send_keys("2wsx2WSX")
+        login_btn = self.driver.find_element_by_name('ns_7_CGAH47L00GNRC0I4B42HGB20E4__login')
+        login_btn.click()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(
+            (By.LINK_TEXT,"ППК ЭФЮДКО")))
+        EFUDKO_tab = self.driver.find_element_by_link_text('ППК ЭФЮДКО')
+        EFUDKO_tab.click()
+        # kit_del = self.driver.find_element_by_xpath("//a[text()='Удаление комплектов ']")
+        # kit_del.click()
+        # efudko_iframe = self.driver.find_element_by_name("EFUDKO Viewer")
+        # self.driver.switch_to.frame(efudko_iframe)
+        # kit_number = self.driver.find_element_by_xpath("//input[@tkPid='19']")
+        # kit_number.click()
+        # kit_number.send_keys('00')
+        # kit_number.click()
+        # kit_number.send_keys('00')
+        # kit_number.click()
+        # kit_number.send_keys('00')
+        # kit_number.send_keys('10')
+        # kit_number.click()
+        # kit_number.send_keys('37')
+        # kit_number.send_keys('08')
+        # find_btn = self.driver.find_element_by_xpath("//div[@tkPid='23']")
+        # find_btn.click()
+        # WebDriverWait(self.driver, 2).until(EC.presence_of_element_located(
+        #     (By.XPATH,"//div[@tkPid='55']")))
+        # del_btn = self.driver.find_element_by_xpath("//div[@tkPid='55']")
+        # del_btn.click()
+        # del_btn = self.driver.find_element_by_xpath("//div[@tkPid='61']")
+        # del_btn.click()
+        # self.driver.switch_to.default_content()
+        trash = self.driver.find_element_by_xpath("//a[text()='Корзина ']")
+        trash.click()
+        efudko_iframe = self.driver.find_element_by_name("EFUDKO Viewer")
+        self.driver.switch_to.frame(efudko_iframe)
+        more_btn = self.driver.find_element_by_xpath("//tr[@$H='528']/td/button")
+        more_btn.click()
+        more_btn = self.driver.find_element_by_xpath("//div[@tkPid='116']")
+        more_btn.click()
+
+
 if __name__ == '__main__':
     efudko = Efudko()
-    efudko.login()
+    efudko.boot()
+    # efudko.login("efdmanagerca", "2wsx2WSX")
+    efudko.del_and_restore()
     efudko.close()
 
 
