@@ -4,6 +4,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+import time
 
 class Efudko(object):
     
@@ -44,13 +45,13 @@ class Efudko(object):
     def close(self):
         self.driver.close()
 
-    # def elem_id(self):
-    #     elem = self.driver.find_element_by_class_name('navigationPanel')
-    #     return elem.get_attribute('id')
+    def elem_id(self):
+        elem = self.driver.find_element_by_class_name('navigationPanel')
+        return elem.get_attribute('id')
 
-    # def del_tab(self):
-    #     del_tab = self.driver.find_element_by_link_text('На рассмотрении')
-    #     del_tab.click() 
+    def del_tab(self):
+        del_tab = self.driver.find_element_by_link_text('На рассмотрении')
+        del_tab.click() 
 
     def doc_kit_creation(self):
         self.driver.switch_to.default_content()
@@ -74,17 +75,23 @@ class Efudko(object):
         resp_office.send_keys(Keys.RETURN)
         org_name = self.driver.find_element_by_xpath("//input[@*[starts-with(name(), 'jquery')]='119']")
         org_name.send_keys('1115')
+        time.sleep(1)
         org_name.send_keys(Keys.DOWN)
         org_name.send_keys(Keys.RETURN)    
         explan_msg = self.driver.find_element_by_xpath("//input[@*[starts-with(name(), 'jquery')]='74']")
         explan_msg.send_keys('Тестирование ' + self.driver.session_id) 
         add_doc = self.driver.find_element_by_xpath("//button[@*[starts-with(name(), 'jquery')]='26']")
         add_doc.click()
-        # C:\Users\erofe\Downloads\Mobilny_UNI_IIBS_Zadanie_2.pdf
-        self.driver.execute_script("""var inputBox = document.querySelector('input[name="documents[0]"][type="file"]');\
-            inputBox.setAttribute('value','C:\\Users\\erofe\\Downloads\\Mobilny_UNI_IIBS_Zadanie_2.pdf';""")
-        WebDriverWait(self.driver, 60).until(EC.element_to_be_clickable(
-            (By.XPATH,"XXX")))
+        doc_upload = self.driver.find_element_by_xpath("//input[@*[starts-with(name(), 'jquery')]='211']")
+        doc_folder = "C:\\Users\\aerofeev\\Downloads\\"
+        doc_to_upload = doc_folder + "6921.pdf"
+        doc_upload.send_keys(doc_to_upload)
+        doc_type = self.driver.find_element_by_xpath("//input[@*[starts-with(name(), 'jquery')]='222']")
+        doc_type.send_keys('11102')
+        doc_type.send_keys(Keys.DOWN)
+        doc_type.send_keys(Keys.RETURN)      
+        submit_btn = self.driver.find_element_by_xpath("//button[@class='btn btn-info btn-lg']")
+        submit_btn.click()
 
 if __name__ == '__main__':
     efudko = Efudko()
