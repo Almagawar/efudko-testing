@@ -54,6 +54,7 @@ class Efudko(object):
         del_tab.click() 
 
     def doc_kit_creation(self):
+        # Создание комплекта документов КО
         self.driver.switch_to.default_content()
         doc_load_tab = self.driver.find_element_by_link_text('Загрузка внутренних ЭД')
         doc_load_tab.click()
