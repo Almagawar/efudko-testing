@@ -9,7 +9,7 @@ import time
 class Efudko(object):
     
     def boot(self):
-        # Запуск браузера и переход на страницу порала ЭФЮДКО
+        # Запуск браузера и переход на страницу портала ЭФЮДКО
         self.driver = webdriver.Ie()
         self.driver.maximize_window()
         self.driver.get("http://portal.efudko.dkz.cloud/wps/portal/!ut/p/c5/04_SB8K\
