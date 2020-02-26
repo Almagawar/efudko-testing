@@ -9,12 +9,14 @@ import time
 class Efudko(object):
     
     def boot(self):
+        # Запуск браузера и переход на страницу порала ЭФЮДКО
         self.driver = webdriver.Ie()
         self.driver.maximize_window()
         self.driver.get("http://portal.efudko.dkz.cloud/wps/portal/!ut/p/c5/04_SB8K\
             8xLLM9MSSzPy8xBz9QJ_89PTUFP_SEv2CdEVFALCPJr8!/")
 
     def login(self, lgin, pw):
+        # Вход в систему с заданными данными УЗ и переход на главную страницу ЭФЮДКО
         user_id = self.driver.find_element_by_name('wps.portlets.userid')
         user_id.send_keys(lgin)
         password = self.driver.find_element_by_name('password')
@@ -45,15 +47,8 @@ class Efudko(object):
         login_btn.click()
 
     def close(self):
+        # Закрытие браузера
         self.driver.close()
-
-    def elem_id(self):
-        elem = self.driver.find_element_by_class_name('navigationPanel')
-        return elem.get_attribute('id')
-
-    def del_tab(self):
-        del_tab = self.driver.find_element_by_link_text('На рассмотрении')
-        del_tab.click() 
 
     def doc_kit_creation(self, lgin, pw):
         # Создание комплекта документов КО
@@ -98,6 +93,7 @@ class Efudko(object):
         submit_btn.click()
 
     def del_and_restore(self):
+        # Удаление и восстановление комплекта документов КО
         user_id = self.driver.find_element_by_name('wps.portlets.userid')
         user_id.send_keys("efdOperatorDelED")
         password = self.driver.find_element_by_name('password')
@@ -141,8 +137,6 @@ class Efudko(object):
         time.sleep(2)
         efudko_iframe = self.driver.find_element_by_name("EFUDKO Viewer")
         self.driver.switch_to.frame(efudko_iframe)
-        # WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(
-        #     (By.XPATH, "//td[text()='" + kit_name + "']")))
         more_btn = self.driver.find_element_by_xpath("//td[text()='" + kit_name + "']/../td/button")
         more_btn.click()
         WebDriverWait(self.driver, 2).until(EC.presence_of_element_located(
@@ -156,19 +150,6 @@ class Efudko(object):
 if __name__ == '__main__':
     efudko = Efudko()
     efudko.boot()
-    # efudko.login("efdmanagerca", "2wsx2WSX")
+    efudko.login("efdmanagerca", "2wsx2WSX")
     efudko.del_and_restore()
     efudko.close()
-
-
-
-# self.driver.execute_script("""var div1 = document.querySelector('div.col-xs-12 * div.selectize-input.items.not-full'); \
-#     var input = document.querySelector('div.col-xs-12 * div.selectize-input.items.not-full input');\
-#     var div2 = document.createElement('div'); \
-#     div2.innerHTML = '1100 - Согласование наименования КО при ее учреждении'; \
-#     div1.insertBefore(div2, input); div2.setAttribute('class', 'item'); div2.setAttribute('data-value', '1100');\
-#     div1.setAttribute('class', 'selectize-input items has-options full has-items');""")
-# self.driver.execute_script("""var procCodeOpt = document.querySelector('select[name="registrationProcedureCode"] option');\
-#     procCodeOpt.setAttribute('value', '1100');var structDeptOpt = document.querySelector('select[name="structuralDepartment"] option');\
-#     structDeptOpt.setAttribute('value', '74');var orgOpt = document.querySelector('select[id="organizationNew"] option');\
-#     orgOpt.setAttribute('value', 'ООО "Костромаселькомбанк"');""")
