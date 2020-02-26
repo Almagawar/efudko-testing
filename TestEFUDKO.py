@@ -10,15 +10,8 @@ class TestEFUDKO(unittest.TestCase):
     def tearDown(self):
         self.efudko.close()
 
-    # def test_elem_id(self):
-    #     elem_id = self.efudko.elem_id()
-    #     self.assertEqual(elem_id, 'homeLink')
-
-    # def test_del_tab(self):
-    #     self.efudko.del_tab()
-
-    # def test_doc_kit_creation(self):
-    #     self.efudko.doc_kit_creation("efdmanagerca", "2wsx2WSX")
+    def test_doc_kit_creation(self):
+        self.efudko.doc_kit_creation("efdmanagerca", "2wsx2WSX")
 
     def test_del_and_restore(self):
         self.efudko.del_and_restore()
