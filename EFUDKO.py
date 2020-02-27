@@ -121,7 +121,8 @@ class Efudko(object):
         kit_number.send_keys(kit_n[:2])
         kit_number.send_keys(kit_n[6:8])
         kit_number.click()
-        kit_number.send_keys(kit_n[8:10])
+        kit_number.send_keys(kit_n[8:9])
+        kit_number.send_keys(kit_n[9:10])
         kit_number.send_keys(kit_n[10:])
         find_btn = self.driver.find_element_by_xpath("//div[@tkPid='23']")
         find_btn.click()
@@ -149,7 +150,9 @@ class Efudko(object):
 
 if __name__ == '__main__':
     efudko = Efudko()
+    # efudko.boot()
+    # efudko.doc_kit_creation("efdmanagerca", "2wsx2WSX")
+    # efudko.close()
     efudko.boot()
-    efudko.login("efdmanagerca", "2wsx2WSX")
     efudko.del_and_restore()
     efudko.close()
