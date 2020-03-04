@@ -12,8 +12,7 @@ class Efudko(object):
         # Запуск браузера и переход на страницу портала ЭФЮДКО
         self.driver = webdriver.Ie()
         self.driver.maximize_window()
-        self.driver.get("http://portal.efudko.dkz.cloud/wps/portal/!ut/p/c5/04_SB8K\
-            8xLLM9MSSzPy8xBz9QJ_89PTUFP_SEv2CdEVFALCPJr8!/")
+        self.driver.get("http://portal.efudko.dkz.cloud/wps/portal/")
 
     def login(self, lgin, pw):
         # Вход в систему с заданными данными УЗ и переход на главную страницу ЭФЮДКО
